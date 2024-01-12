@@ -1,6 +1,7 @@
 import { User, Envelope, LockKey } from '@phosphor-icons/react'
+import { Link } from 'react-router-dom'
 
-export function App() {
+export function Register() {
 	return (
 		<div className="w-full h-screen flex items-center flex-col">
 			<h1 className="font-title mt-32 text-[4rem]">
@@ -90,11 +91,11 @@ export function App() {
 				</button>
 			</form>
 
-			<span className="mt-20">
+			<span className="mt-20 text-sm">
 				Já possui conta no (dev)Empregado?{' '}
-				<a href="#" className="font-semibold text-purple-primary underline">
+				<Link to="login" className="font-semibold text-purple-primary underline">
 					Clique aqui
-				</a>{' '}
+				</Link>{' '}
 				para se logar
 			</span>
 		</div>
