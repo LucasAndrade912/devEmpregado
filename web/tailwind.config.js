@@ -1,9 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./src/**/*.{html,tsx}"],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
+	content: ['./src/**/*.{html,tsx}'],
+	theme: {
+		extend: {
+			fontFamily: {
+				title: 'Russo One, sans-serif'
+			}
+		},
+	},
+	plugins: [],
 }
-
