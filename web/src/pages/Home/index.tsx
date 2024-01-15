@@ -2,9 +2,12 @@ import { useState } from 'react'
 import { Plus } from '@phosphor-icons/react'
 
 import { Select } from './components/Select'
+import { JobCard } from './components/JobCard'
 import { RadioGroup } from './components/RadioGroup'
 
-type Modalities = 'Remoto' | 'Presencial' | 'Hibrido'
+import { fakeJobs } from '../../utils/fakeData'
+
+type Modalities = 'Remoto' | 'Presencial' | 'Híbrido'
 type Contracts = 'CLT' | 'PJ'
 
 export function Home() {
@@ -24,7 +27,7 @@ export function Home() {
 				</button>
 			</header>
 
-			<main className="mt-[108px] flex">
+			<div className="mt-[108px] flex">
 				<div id="filters">
 					<h2 className="text-2xl font-medium mb-10">Filtrar por:</h2>
 
@@ -71,8 +74,12 @@ export function Home() {
 
 				<div className="divisor mx-16 h-[520px] w-px bg-[#b3b3b3]" />
 
-				<main id="jobs"></main>
-			</main>
+				<main id="jobs" className="grid 2xl:grid-cols-3 grid-cols-2 2xl:gap-12 gap-7 w-full">
+					{fakeJobs.map((job) => (
+						<JobCard key={job.id} {...job} />
+					))}
+				</main>
+			</div>
 		</div>
 	)
 }
