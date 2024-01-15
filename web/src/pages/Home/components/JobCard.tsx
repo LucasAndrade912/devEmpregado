@@ -33,7 +33,7 @@ export function JobCard({ title, status, company, contract, modality, salary }: 
 			</div>
 
 			<div className="flex gap-3 mb-5">
-				<span className="flex gap-1 items-center text-sm 2xl:w-[60%] w-[50%]">
+				<span className="flex gap-1 items-center text-sm w-[50%]">
 					<Buildings size={14} color="#060606" />{' '}
 					<span className="block overflow-hidden overflow-ellipsis whitespace-nowrap">
 						Empresa: {company}
@@ -45,7 +45,7 @@ export function JobCard({ title, status, company, contract, modality, salary }: 
 			</div>
 
 			<div className="flex gap-3 mb-7">
-				<span className="flex gap-1 items-center text-sm 2xl:w-[60%] w-[50%]">
+				<span className="flex gap-1 items-center text-sm w-[50%]">
 					<MapPin size={14} color="#060606" /> <span>Modalidade: {modality}</span>
 				</span>
 				<span className="flex gap-1 items-center text-sm">
