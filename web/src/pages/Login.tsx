@@ -1,7 +1,15 @@
+import { FormEvent } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { Envelope, LockKey } from '@phosphor-icons/react'
-import { Link } from 'react-router-dom'
 
 export function Login() {
+	const navigate = useNavigate()
+
+	function handleLoginUser(event: FormEvent) {
+		event.preventDefault()
+		navigate('/home')
+	}
+
 	return (
 		<div className="w-full h-screen flex items-center flex-col">
 			<h1 className="font-title mt-32 text-[4rem]">
@@ -11,7 +19,8 @@ export function Login() {
 				Dificuldade em lembrar de todas as vagas que se candidatou?
 				<br /> Cadastre-se e lembresse de todas as suas candidaturas.
 			</p>
-			<form className="w-[35.25rem]">
+
+			<form className="w-[35.25rem]" onSubmit={handleLoginUser}>
 				<div className="input-field flex flex-col gap-4 mb-7">
 					<label htmlFor="email" className="text-lg">
 						Email <span className="text-red-500">*</span>
