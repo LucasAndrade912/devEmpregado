@@ -2,6 +2,7 @@ import { FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { User, Envelope, LockKey } from '@phosphor-icons/react'
 
+import { Input } from '../components/Input'
 import { Button } from '../components/Button'
 
 export function Register() {
@@ -29,16 +30,13 @@ export function Register() {
 						Nome <span className="text-red-500">*</span>
 					</label>
 
-					<div className="input border border-black-border px-3 py-[10px] flex items-center gap-3 rounded">
-						<User size={20} color="#2F2F2F" />
+					<Input.Root>
+						<Input.Icon>
+							<User />
+						</Input.Icon>
 
-						<input
-							id="name"
-							type="text"
-							placeholder="Digite seu nome completo"
-							className="flex-1 placeholder:text-[#797979] outline-none"
-						/>
-					</div>
+						<Input.Field id="name" placeholder="Digite seu nome completo" />
+					</Input.Root>
 				</div>
 
 				<div className="input-field flex flex-col gap-4 mb-7">
@@ -46,16 +44,13 @@ export function Register() {
 						Email <span className="text-red-500">*</span>
 					</label>
 
-					<div className="input border border-black-border px-3 py-[10px] flex items-center gap-3 rounded">
-						<Envelope size={20} color="#2F2F2F" />
+					<Input.Root>
+						<Input.Icon>
+							<Envelope />
+						</Input.Icon>
 
-						<input
-							id="email"
-							type="email"
-							placeholder="fula@fulano.com"
-							className="flex-1 placeholder:text-[#797979] outline-none"
-						/>
-					</div>
+						<Input.Field id="email" type="email" placeholder="fula@fulano.com" />
+					</Input.Root>
 				</div>
 
 				<div id="passwords" className="grid grid-cols-2 gap-6">
@@ -64,16 +59,18 @@ export function Register() {
 							Senha <span className="text-red-500">*</span>
 						</label>
 
-						<div className="input border border-black-border px-3 py-[10px] flex items-center gap-3 rounded">
-							<LockKey size={20} color="#2F2F2F" />
+						<Input.Root>
+							<Input.Icon>
+								<LockKey />
+							</Input.Icon>
 
-							<input
+							<Input.Field
 								id="password"
 								type="password"
 								placeholder="********"
-								className="min-w-0 flex-1 placeholder:text-[#797979] outline-none"
+								className="min-w-0"
 							/>
-						</div>
+						</Input.Root>
 					</div>
 
 					<div className="input-field flex flex-col gap-4">
@@ -81,16 +78,18 @@ export function Register() {
 							Confirmar senha <span className="text-red-500">*</span>
 						</label>
 
-						<div className="input border border-black-border px-3 py-[10px] flex items-center gap-3 rounded">
-							<LockKey size={20} color="#2F2F2F" />
+						<Input.Root>
+							<Input.Icon>
+								<LockKey />
+							</Input.Icon>
 
-							<input
+							<Input.Field
 								id="confirm-password"
 								type="password"
 								placeholder="********"
-								className="min-w-0 flex-1 placeholder:text-[#797979] outline-none"
+								className="min-w-0"
 							/>
-						</div>
+						</Input.Root>
 					</div>
 				</div>
 

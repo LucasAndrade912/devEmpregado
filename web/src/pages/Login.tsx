@@ -2,6 +2,7 @@ import { FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Envelope, LockKey } from '@phosphor-icons/react'
 
+import { Input } from '../components/Input'
 import { Button } from '../components/Button'
 
 export function Login() {
@@ -28,16 +29,13 @@ export function Login() {
 						Email <span className="text-red-500">*</span>
 					</label>
 
-					<div className="input border border-black-border px-3 py-[10px] flex items-center gap-3 rounded">
-						<Envelope size={20} color="#2F2F2F" />
+					<Input.Root>
+						<Input.Icon>
+							<Envelope />
+						</Input.Icon>
 
-						<input
-							id="email"
-							type="email"
-							placeholder="fula@fulano.com"
-							className="flex-1 placeholder:text-[#797979] outline-none"
-						/>
-					</div>
+						<Input.Field id="email" type="email" placeholder="fula@fulano.com" />
+					</Input.Root>
 				</div>
 
 				<div className="input-field flex flex-col gap-4">
@@ -45,16 +43,13 @@ export function Login() {
 						Senha <span className="text-red-500">*</span>
 					</label>
 
-					<div className="input border border-black-border px-3 py-[10px] flex items-center gap-3 rounded">
-						<LockKey size={20} color="#2F2F2F" />
+					<Input.Root>
+						<Input.Icon>
+							<LockKey />
+						</Input.Icon>
 
-						<input
-							id="password"
-							type="password"
-							placeholder="********"
-							className="min-w-0 flex-1 placeholder:text-[#797979] outline-none"
-						/>
-					</div>
+						<Input.Field id="password" type="password" placeholder="********" className="min-w-0" />
+					</Input.Root>
 				</div>
 
 				<Button.Root type="submit" className="mt-10 w-full">
