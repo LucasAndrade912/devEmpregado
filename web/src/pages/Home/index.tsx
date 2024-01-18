@@ -5,6 +5,8 @@ import { Select } from './components/Select'
 import { JobCard } from './components/JobCard'
 import { RadioGroup } from './components/RadioGroup'
 
+import { Button } from '../../components/Button'
+
 import { fakeJobs } from '../../utils/fakeData'
 
 type Modalities = 'Remoto' | 'Presencial' | 'Híbrido'
@@ -21,10 +23,15 @@ export function Home() {
 					<span className="font-title text-purple-secondary">(dev)</span>Empregado
 				</h1>
 
-				<button className="bg-purple-primary flex px-5 py-[14px] rounded-lg gap-[14px] items-center uppercase text-white hover:bg-purple-hover transition-colors">
-					<Plus size={18} color="#FFF" />
-					Cadastrar candidatura
-				</button>
+				<Button.Root asChild>
+					<a href="#">
+						<Button.Icon>
+							<Plus size={18} color="#FFF" />
+						</Button.Icon>
+
+						<Button.Text>Cadastrar candidatura</Button.Text>
+					</a>
+				</Button.Root>
 			</header>
 
 			<div className="mt-[108px] flex">

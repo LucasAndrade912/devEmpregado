@@ -6,6 +6,8 @@ import {
 	Link as LinkURL,
 } from '@phosphor-icons/react'
 
+import { Button } from '../../../components/Button'
+
 import { formatCurrency } from '../../../utils/formatCurrency'
 
 type Props = {
@@ -54,12 +56,14 @@ export function JobCard({ title, status, company, contract, modality, salary }: 
 				</span>
 			</div>
 
-			<a
-				className="bg-purple-primary px-[14px] py-2 text-white rounded-lg uppercase flex gap-3 self-start items-center hover:bg-purple-hover transition-colors"
-				href="#">
-				<LinkURL size={16} color="#FFF" />
-				<span>Acessar vaga</span>
-			</a>
+			<Button.Root asChild className="self-start gap-3 px-[14px] py-2">
+				<a href="#">
+					<Button.Icon>
+						<LinkURL size={16} color="#FFF" />
+					</Button.Icon>
+					<Button.Text>Acessar vaga</Button.Text>
+				</a>
+			</Button.Root>
 		</div>
 	)
 }

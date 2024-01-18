@@ -2,6 +2,8 @@ import { FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { User, Envelope, LockKey } from '@phosphor-icons/react'
 
+import { Button } from '../components/Button'
+
 export function Register() {
 	const navigate = useNavigate()
 
@@ -92,11 +94,9 @@ export function Register() {
 					</div>
 				</div>
 
-				<button
-					type="submit"
-					className="mt-10 w-full flex justify-center items-center bg-purple-primary text-white uppercase py-[14px] rounded-lg hover:bg-purple-hover transition-colors">
-					Cadastrar usuário
-				</button>
+				<Button.Root type="submit" className="mt-10 w-full">
+					<Button.Text>Cadastrar usuário</Button.Text>
+				</Button.Root>
 			</form>
 
 			<span className="mt-20 text-sm">

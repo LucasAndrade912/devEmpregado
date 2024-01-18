@@ -2,6 +2,8 @@ import { FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Envelope, LockKey } from '@phosphor-icons/react'
 
+import { Button } from '../components/Button'
+
 export function Login() {
 	const navigate = useNavigate()
 
@@ -55,11 +57,9 @@ export function Login() {
 					</div>
 				</div>
 
-				<button
-					type="submit"
-					className="mt-10 w-full flex justify-center items-center bg-purple-primary text-white uppercase py-[14px] rounded-lg hover:bg-purple-hover transition-colors">
-					Acessar plataforma
-				</button>
+				<Button.Root type="submit" className="mt-10 w-full">
+					<Button.Text>Acessar plataforma</Button.Text>
+				</Button.Root>
 			</form>
 
 			<span className="mt-20 text-sm">
