@@ -11,8 +11,9 @@ import { Link as LinkURL } from 'react-router-dom'
 import { Input } from '../components/Input'
 import { Select } from '../components/Select'
 import { Button } from '../components/Button'
+import { formatCurrency } from '../utils/formatCurrency'
 
-export function NewJob() {
+export function JobEdit() {
 	return (
 		<div className="mt-14">
 			<ul className="flex gap-2 items-center text-xs">
@@ -22,7 +23,13 @@ export function NewJob() {
 					</LinkURL>
 				</li>
 				<li>&#707;</li>
-				<li>Cadastrar candidatura</li>
+				<li>
+					<LinkURL to="/home/jobs/1" className="hover:underline">
+						Programador Senior
+					</LinkURL>
+				</li>
+				<li>&#707;</li>
+				<li>Editar</li>
 			</ul>
 
 			<form className="mt-14 w-[1000px]">
@@ -39,7 +46,12 @@ export function NewJob() {
 								<Buildings />
 							</Input.Icon>
 
-							<Input.Field id="empresa" type="text" placeholder="Empresa da candidatura" />
+							<Input.Field
+								id="empresa"
+								type="text"
+								placeholder="Empresa da candidatura"
+								value="Baires Dev"
+							/>
 						</Input.Root>
 					</div>
 
@@ -53,7 +65,12 @@ export function NewJob() {
 								<Briefcase />
 							</Input.Icon>
 
-							<Input.Field id="cargo" type="text" placeholder="Cargo da candidatura" />
+							<Input.Field
+								id="cargo"
+								type="text"
+								placeholder="Cargo da candidatura"
+								value="Programador Senior"
+							/>
 						</Input.Root>
 					</div>
 				</div>
@@ -62,7 +79,7 @@ export function NewJob() {
 					<div className="flex flex-col gap-4">
 						<label className="text-lg">Modalidade</label>
 
-						<Select.Root>
+						<Select.Root defaultValue="Presencial">
 							<Select.Trigger className="w-full">
 								<Select.Icon>
 									<MapPin />
@@ -81,7 +98,7 @@ export function NewJob() {
 					<div className="flex flex-col gap-4">
 						<label className="text-lg">Tipo de Contrato</label>
 
-						<Select.Root>
+						<Select.Root defaultValue="CLT">
 							<Select.Trigger className="w-full">
 								<Select.Icon>
 									<AddressBook />
@@ -109,9 +126,10 @@ export function NewJob() {
 
 							<Input.Field
 								id="salario"
-								type="number"
+								type="text"
 								placeholder="Salário da vaga"
 								className="min-w-0"
+								value={formatCurrency(13000)}
 							/>
 						</Input.Root>
 					</div>
@@ -127,12 +145,17 @@ export function NewJob() {
 							<Link />
 						</Input.Icon>
 
-						<Input.Field id="link" type="url" placeholder="Link para acessar a vaga" />
+						<Input.Field
+							id="link"
+							type="url"
+							placeholder="Link para acessar a vaga"
+							value="https://github.com/LucasAndrade912"
+						/>
 					</Input.Root>
 				</div>
 
 				<Button.Root type="submit" className="px-10">
-					<Button.Text className="font-medium">Cadastrar</Button.Text>
+					<Button.Text className="font-medium">Atualizar</Button.Text>
 				</Button.Root>
 			</form>
 		</div>

@@ -81,7 +81,7 @@ export function JobDetails() {
 					<Button.Root
 						className="px-[14px] py-2 bg-[#2F2F2F] transition-colors hover:bg-[#474747]"
 						asChild>
-						<LinkURL to="#" target="_blank">
+						<LinkURL to="edit">
 							<Button.Icon>
 								<PencilSimple />
 							</Button.Icon>
