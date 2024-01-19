@@ -9,8 +9,10 @@ export function Layout() {
 	return (
 		<div className="px-14 py-16">
 			<header className="flex justify-between">
-				<h1 className="font-title text-5xl">
-					<span className="font-title text-purple-secondary">(dev)</span>Empregado
+				<h1 className="text-5xl">
+					<Link to="/home" className="font-title">
+						<span className="font-title text-purple-secondary">(dev)</span>Empregado
+					</Link>
 				</h1>
 
 				{!pathname.includes('new-job') && (
