@@ -1,7 +1,7 @@
 import * as SelectPrimitive from '@radix-ui/react-select'
 
 type Props = {
-	placeholder: string
+	placeholder?: string
 }
 
 export function SelectValue({ placeholder }: Props) {
