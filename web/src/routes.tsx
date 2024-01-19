@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
+import { JobDetails } from './pages/JobDetails'
 import { Register } from './pages/Register'
 import { NewJob } from './pages/NewJob'
 import { Layout } from './pages/Layout'
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
 			{
 				path: 'new-job',
 				element: <NewJob />,
+			},
+			{
+				path: 'jobs/:jobId',
+				element: <JobDetails />,
 			},
 		],
 	},
