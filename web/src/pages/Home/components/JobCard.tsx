@@ -9,6 +9,7 @@ import {
 import { Button } from '../../../components/Button'
 
 import { formatCurrency } from '../../../utils/formatCurrency'
+import { Link } from 'react-router-dom'
 
 type Props = {
 	title: string
@@ -24,11 +25,11 @@ export function JobCard({ title, status, company, contract, modality, salary }: 
 		<div className="p-6 border border-black-border rounded-lg flex flex-col">
 			<div className="flex justify-between items-center mb-7">
 				<h3 className="font-semibold text-xl underline">
-					<a
-						href="#"
+					<Link
+						to="jobs/1"
 						className="block w-[280px] overflow-hidden overflow-ellipsis whitespace-nowrap">
 						{title}
-					</a>
+					</Link>
 				</h3>
 
 				<span className="text-xs italic">{status}</span>
