@@ -5,7 +5,7 @@ type Props = {
 	value: string
 }
 
-export function Item({ value }: Props) {
+export function SelectItem({ value }: Props) {
 	return (
 		<SelectPrimitive.Item
 			value={value}

@@ -1,10 +1,10 @@
 import { useState } from 'react'
 
-import { Select } from './components/Select'
 import { JobCard } from './components/JobCard'
 import { RadioGroup } from './components/RadioGroup'
 
 import { fakeJobs } from '../../utils/fakeData'
+import { Select } from '../../components/Select'
 
 type Modalities = 'Remoto' | 'Presencial' | 'Híbrido'
 type Contracts = 'CLT' | 'PJ'
@@ -22,19 +22,33 @@ export function Home() {
 					<div className="input-field flex flex-col gap-[14px]">
 						<p>Empresa</p>
 
-						<Select
-							items={['google', 'microsoft', 'apple', 'meta']}
-							placeholder="Selecione a empresa"
-						/>
+						<Select.Root>
+							<Select.Trigger className="w-full">
+								<Select.Value placeholder="Selecione a empresa" />
+							</Select.Trigger>
+
+							<Select.Items>
+								{['google', 'microsoft', 'apple', 'meta'].map((item) => (
+									<Select.Item value={item} key={item} />
+								))}
+							</Select.Items>
+						</Select.Root>
 					</div>
 
 					<div className="input-field flex flex-col gap-[14px]">
 						<p>Cargo</p>
 
-						<Select
-							items={['Programador', 'Cibersegurança', 'Desenvolvedor Pleno', 'Estágio']}
-							placeholder="Selecione o cargo"
-						/>
+						<Select.Root>
+							<Select.Trigger className="w-full">
+								<Select.Value placeholder="Selecione o cargo" />
+							</Select.Trigger>
+
+							<Select.Items>
+								{['Programador', 'Cibersegurança', 'Desenvolvedor Pleno', 'Estágio'].map((item) => (
+									<Select.Item value={item} key={item} />
+								))}
+							</Select.Items>
+						</Select.Root>
 					</div>
 
 					<div className="input-field flex flex-col gap-[14px]">

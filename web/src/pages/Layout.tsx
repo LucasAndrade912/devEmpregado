@@ -1,5 +1,5 @@
 import { Plus } from '@phosphor-icons/react'
-import { Outlet, useLocation } from 'react-router-dom'
+import { Link, Outlet, useLocation } from 'react-router-dom'
 
 import { Button } from '../components/Button'
 
@@ -15,20 +15,20 @@ export function Layout() {
 
 				{!pathname.includes('new-job') && (
 					<Button.Root asChild>
-						<a href="#">
+						<Link to="new-job">
 							<Button.Icon>
 								<Plus size={18} color="#FFF" />
 							</Button.Icon>
 
 							<Button.Text>Cadastrar candidatura</Button.Text>
-						</a>
+						</Link>
 					</Button.Root>
 				)}
 			</header>
 
 			<Outlet />
 
-			<footer className="text-sm font-medium text-[#060606] mt-28 text-center">
+			<footer className="text-sm font-medium mt-28 text-center">
 				Feito por{' '}
 				<a
 					className="text-purple-primary underline"
