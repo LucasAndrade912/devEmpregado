@@ -11,13 +11,13 @@ type Props = {
 }
 
 export class Job {
-	private _company: string
-	private _role: string
-	private _modality: string | undefined | null
-	private _contract: string | undefined | null
-	private _salary: number | undefined | null
-	private _status: 'Andamento' | 'Encerrada' | 'Efetivado'
-	private _job_url: string
+	private company: string
+	private role: string
+	private modality: string | undefined | null
+	private contract: string | undefined | null
+	private salary: number | undefined | null
+	private status: 'Andamento' | 'Encerrada' | 'Efetivado'
+	private job_url: string
 
 	constructor(props: Props) {
 		const jobSchema = z.object({
@@ -32,12 +32,12 @@ export class Job {
 
 		const job = jobSchema.parse(props)
 
-		this._company = job.company
-		this._role = job.role
-		this._modality = job.modality
-		this._contract = job.contract
-		this._salary = job.salary
-		this._status = job.status
-		this._job_url = job.job_url
+		this.company = job.company
+		this.role = job.role
+		this.modality = job.modality
+		this.contract = job.contract
+		this.salary = job.salary
+		this.status = job.status
+		this.job_url = job.job_url
 	}
 }

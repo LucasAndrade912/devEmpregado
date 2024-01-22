@@ -1,12 +1,15 @@
 import { z } from 'zod'
 import bcrypt from 'bcrypt'
 
+import { Job } from './job'
+
 const workFactor = 8
 
 export class User {
-	private _name: string
-	private _email: string
-	private _password: string
+	private name: string
+	private email: string
+	private password: string
+	private jobs: Job[] = []
 
 	constructor(name: string, email: string, password: string) {
 		const userSchema = z.object({
@@ -17,11 +20,11 @@ export class User {
 
 		const user = userSchema.parse({ name, email, password })
 
-		this._name = user.name
-		this._email = user.email
+		this.name = user.name
+		this.email = user.email
 
 		this.encryptPassword(user.password)
-			.then((encryptPassword) => this._password = encryptPassword)
+			.then((encryptPassword) => this.password = encryptPassword)
 			.catch(console.log)
 	}
 
