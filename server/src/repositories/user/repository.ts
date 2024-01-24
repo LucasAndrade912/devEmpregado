@@ -4,8 +4,9 @@ import { User } from '../../entities/user'
 type UserWithoutMethods = Omit<User, 'encryptPassword'>
 
 export class UserRepository {
-	async create(newUser: User): Promise<void> {
-		await UserModel.create(newUser)
+	async create(newUser: User): Promise<string> {
+		const { _id } = await UserModel.create(newUser)
+		return _id.toString()
 	}
 
 	async findById(id: string): Promise<UserWithoutMethods> {
