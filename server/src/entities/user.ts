@@ -11,7 +11,13 @@ export class User {
 	private password: string
 	private jobs: Job[] = []
 
-	constructor(name: string, email: string, password: string) {
+	private constructor(name: string, email: string, password: string) {
+		this.name = name
+		this.email = email
+		this.password = password
+	}
+
+	static async build(name: string, email: string, password: string) {
 		const userSchema = z.object({
 			name: z.string().min(2),
 			email: z.string().email(),
@@ -19,16 +25,12 @@ export class User {
 		})
 
 		const user = userSchema.parse({ name, email, password })
+		const encryptPassword = await User.encryptPassword(user.password)
 
-		this.name = user.name
-		this.email = user.email
-
-		this.encryptPassword(user.password)
-			.then((encryptPassword) => this.password = encryptPassword)
-			.catch(console.log)
+		return new User(user.name, user.email, encryptPassword)
 	}
 
-	private async encryptPassword(password: string): Promise<string> {
+	private static async encryptPassword(password: string): Promise<string> {
 		const salt = await bcrypt.genSalt(workFactor)
 		const hash = await bcrypt.hash(password, salt)
 		return hash
