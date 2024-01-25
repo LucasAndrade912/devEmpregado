@@ -1,6 +1,7 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
+import 'dotenv/config'
 
 import { env } from './env'
 import { Routes } from './routes'
