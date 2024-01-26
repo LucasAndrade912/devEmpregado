@@ -1,5 +1,5 @@
 import { JobModel } from './model'
-import { UserModel } from '../user/model'
+import { UserModel } from '../user/mongodb/model'
 import { Job } from '../../entities/job'
 
 type JobList = Array<Job & { user: string }>

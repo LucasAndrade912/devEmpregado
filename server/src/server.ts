@@ -1,10 +1,11 @@
-import express from 'express'
-import mongoose from 'mongoose'
-import cors from 'cors'
 import 'dotenv/config'
+import cors from 'cors'
+import express from 'express'
 
 import { env } from './env'
 import { Routes } from './routes'
+import { Database } from './database'
+import { MongoDrive } from './database/mongoDrive'
 
 class App {
 	private static server = express()
@@ -17,7 +18,9 @@ class App {
 		this.server.use(App.routes.start())
 
 		try {
-			await mongoose.connect(env.MONGODB_DATABASE_URL)
+			const mongoDriver = new MongoDrive()
+			const db = new Database(env.MONGODB_DATABASE_URL, mongoDriver)
+			await db.connect()
 
 			console.log('✅ Database connection established')
 

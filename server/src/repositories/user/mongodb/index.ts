@@ -1,8 +1,8 @@
-import { UserModel } from '../model'
+import { UserModel } from './model'
 import { User } from '../../../entities/user'
-import { IUserRepository, UserWithoutMethods } from './interface'
+import { UserRepository, UserWithoutMethods } from '../interface'
 
-export class UserRepository implements IUserRepository {
+export class MongoDBUserRepository implements UserRepository {
 	async create(newUser: User): Promise<string> {
 		const { _id } = await UserModel.create(newUser)
 		return _id.toString()
@@ -15,7 +15,6 @@ export class UserRepository implements IUserRepository {
 
 	async findByEmail(email: string): Promise<UserWithoutMethods | null> {
 		const user = await UserModel.findOne({ email })
-
 		return user
 	}
 }
