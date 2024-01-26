@@ -1,10 +1,7 @@
-import { User } from '../../entities/user'
-
-type UserWithoutGetEmail = Omit<User, 'getEmail'>
-export type UserWithoutMethods = Omit<UserWithoutGetEmail, 'encryptPassword'>
+import { User, UserProps } from '../../entities/user'
 
 export interface UserRepository {
 	create: (newUser: User) => Promise<string>
-	findById: (id: string) => Promise<UserWithoutMethods | null>
-	findByEmail: (email: string) => Promise<UserWithoutMethods | null>
+	findById: (id: string) => Promise<UserProps | null>
+	findByEmail: (email: string) => Promise<UserProps | null>
 }

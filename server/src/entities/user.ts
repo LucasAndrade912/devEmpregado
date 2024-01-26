@@ -5,7 +5,16 @@ import { Job } from './job'
 
 const workFactor = 8
 
+export interface UserProps {
+	id: string
+	name: string
+	email: string
+	password: string
+	jobs?: Job[]
+}
+
 export class User {
+	private id: string = ''
 	private name: string
 	private email: string
 	private password: string
@@ -36,7 +45,19 @@ export class User {
 		return hash
 	}
 
+	getId(): string {
+		return this.id
+	}
+
+	getName(): string {
+		return this.name
+	}
+
 	getEmail(): string {
 		return this.email
+	}
+
+	getPassword(): string {
+		return this.password
 	}
 }

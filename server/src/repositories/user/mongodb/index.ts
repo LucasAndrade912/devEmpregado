@@ -1,6 +1,6 @@
 import { UserModel } from './model'
-import { User } from '../../../entities/user'
-import { UserRepository, UserWithoutMethods } from '../interface'
+import { UserRepository } from '../interface'
+import { User, UserProps } from '../../../entities/user'
 
 export class MongoDBUserRepository implements UserRepository {
 	async create(newUser: User): Promise<string> {
@@ -8,13 +8,25 @@ export class MongoDBUserRepository implements UserRepository {
 		return _id.toString()
 	}
 
-	async findById(id: string): Promise<UserWithoutMethods | null> {
+	async findById(id: string): Promise<UserProps | null> {
 		const user = await UserModel.findById(id)
-		return user
+		if (!user) return null
+		return {
+			id: user._id.toString(),
+			name: user.name,
+			email: user.email,
+			password: user.password
+		}
 	}
 
-	async findByEmail(email: string): Promise<UserWithoutMethods | null> {
+	async findByEmail(email: string): Promise<UserProps | null> {
 		const user = await UserModel.findOne({ email })
-		return user
+		if (!user) return null
+		return {
+			id: user._id.toString(),
+			name: user.name,
+			email: user.email,
+			password: user.password
+		}
 	}
 }
