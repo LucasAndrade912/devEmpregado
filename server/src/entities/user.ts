@@ -35,4 +35,8 @@ export class User {
 		const hash = await bcrypt.hash(password, salt)
 		return hash
 	}
+
+	getEmail(): string {
+		return this.email
+	}
 }
