@@ -1,5 +1,6 @@
 import { Router } from 'express'
 
+import { LoginUserController } from './controllers/loginUser'
 import { RegisterUserController } from './controllers/registerUser'
 
 export class Routes {
@@ -7,10 +8,7 @@ export class Routes {
 
 	start() {
 		this.router.post('/register', RegisterUserController.handle)
-
-		this.router.post('/login', () => {
-			console.log('Login user')
-		})
+		this.router.post('/login', LoginUserController.handle)
 
 		this.router.get('/jobs', () => {
 			console.log('Get all jobs')
