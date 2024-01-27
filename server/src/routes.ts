@@ -1,12 +1,12 @@
 import { Router } from 'express'
 
+import { RegisterUserController } from './controllers/registerUser'
+
 export class Routes {
 	private router = Router()
 
 	start() {
-		this.router.post('/register', () => {
-			console.log('Register user')
-		})
+		this.router.post('/register', RegisterUserController.handle)
 
 		this.router.post('/login', () => {
 			console.log('Login user')
