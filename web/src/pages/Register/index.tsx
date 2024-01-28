@@ -1,47 +1,40 @@
-import { z } from 'zod'
 import { useForm } from 'react-hook-form'
+import { useMutation } from '@tanstack/react-query'
 import { Link, useNavigate } from 'react-router-dom'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { User, Envelope, LockKey } from '@phosphor-icons/react'
 
-import { Input } from '../components/Input'
-import { Button } from '../components/Button'
+import { Input } from '../../components/Input'
+import { Button } from '../../components/Button'
 
-const createUserSchema = z
-	.object({
-		name: z.string().min(2, 'Deve conter pelo menos 2 caracteres'),
-		email: z.string().email('Email inválido'),
-		password: z
-			.string()
-			.min(8, 'Deve conter pelo menos 8 caracteres')
-			.max(64, 'Deve conter no máximo 64 caracteres'),
-		confirmPassword: z
-			.string()
-			.min(8, 'Deve conter pelo menos 8 caracteres')
-			.max(64, 'Deve conter no máximo 64 caracteres'),
-	})
-	.refine((data) => data.password === data.confirmPassword, {
-		message: 'As senhas não coincidem',
-		path: ['confirmPassword'],
-	})
-
-type CreateUserFields = z.infer<typeof createUserSchema>
+import { createUser } from './data'
+import { CreateUserFields, createUserSchema } from './validator'
 
 export function Register() {
 	const navigate = useNavigate()
-	const {
-		register,
-		handleSubmit,
-		formState: { errors },
-	} = useForm<CreateUserFields>({
+
+	const { mutateAsync: createUserFn, isPending } = useMutation({
+		mutationFn: createUser,
+	})
+
+	const { register, handleSubmit, formState } = useForm<CreateUserFields>({
 		resolver: zodResolver(createUserSchema),
 		mode: 'onChange',
 	})
 
-	function handleRegisterUser(data: CreateUserFields) {
-		console.log(data)
-		navigate('/home')
+	async function handleRegisterUser({ name, email, password }: CreateUserFields) {
+		const user = { name, email, password }
+
+		try {
+			const response = await createUserFn(user)
+			console.log(response)
+			navigate('/home')
+		} catch (error) {
+			console.log(error)
+		}
 	}
+
+	const { errors } = formState
 
 	return (
 		<div className="w-full h-screen flex items-center flex-col">
@@ -154,7 +147,7 @@ export function Register() {
 					</div>
 				</div>
 
-				<Button.Root type="submit" className="mt-10 w-full">
+				<Button.Root type="submit" className="mt-10 w-full" isLoading={isPending}>
 					<Button.Text>Cadastrar usuário</Button.Text>
 				</Button.Root>
 			</form>
