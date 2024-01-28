@@ -15,7 +15,7 @@ export function Login() {
 
 	return (
 		<div className="w-full h-screen flex items-center flex-col">
-			<h1 className="font-title mt-32 text-[4rem]">
+			<h1 className="font-title mt-20 2xl:mt-32 text-[4rem]">
 				<span className="font-title text-purple-secondary">(dev)</span>Empregado
 			</h1>
 			<p className="text-center my-12">
@@ -57,7 +57,7 @@ export function Login() {
 				</Button.Root>
 			</form>
 
-			<span className="mt-20 text-sm">
+			<span className="mt-20 text-sm pb-10 2xl:pb-0">
 				Ainda não possui conta no (dev)Empregado?{' '}
 				<Link to="/" className="font-semibold text-purple-primary underline">
 					Clique aqui
