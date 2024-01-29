@@ -1,10 +1,10 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
+import { PrivateRoutes } from './pages/PrivateRoutes'
 import { JobDetails } from './pages/JobDetails'
 import { Register } from './pages/Register'
 import { JobEdit } from './pages/JobEdit'
 import { NewJob } from './pages/NewJob'
-import { Layout } from './pages/Layout'
 import { Login } from './pages/Login'
 import { Home } from './pages/Home'
 
@@ -19,7 +19,7 @@ const router = createBrowserRouter([
 	},
 	{
 		path: 'home',
-		element: <Layout />,
+		element: <PrivateRoutes />,
 		children: [
 			{
 				index: true,

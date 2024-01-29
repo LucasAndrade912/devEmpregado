@@ -7,14 +7,15 @@ import { User, Envelope, LockKey } from '@phosphor-icons/react'
 import { Input } from '../../components/Input'
 import { Button } from '../../components/Button'
 
-import { createUser } from './data'
+import { useAuth } from '../../hooks/useAuth'
 import { CreateUserFields, createUserSchema } from './validator'
 
 export function Register() {
 	const navigate = useNavigate()
+	const auth = useAuth()
 
 	const { mutateAsync: createUserFn, isPending } = useMutation({
-		mutationFn: createUser,
+		mutationFn: auth.signUp,
 	})
 
 	const { register, handleSubmit, formState } = useForm<CreateUserFields>({
@@ -26,8 +27,7 @@ export function Register() {
 		const user = { name, email, password }
 
 		try {
-			const response = await createUserFn(user)
-			console.log(response)
+			await createUserFn(user)
 			navigate('/home')
 		} catch (error) {
 			console.log(error)

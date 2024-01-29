@@ -1,10 +1,15 @@
 import { Plus } from '@phosphor-icons/react'
-import { Link, Outlet, useLocation } from 'react-router-dom'
+import { Link, Outlet, useLocation, Navigate } from 'react-router-dom'
+
+import { useAuth } from '../hooks/useAuth'
 
 import { Button } from '../components/Button'
 
-export function Layout() {
+export function PrivateRoutes() {
 	const { pathname } = useLocation()
+	const auth = useAuth()
+
+	if (!auth.token) return <Navigate to="/login" />
 
 	return (
 		<div className="px-14 py-16">

@@ -7,14 +7,15 @@ import { Envelope, LockKey } from '@phosphor-icons/react'
 import { Input } from '../../components/Input'
 import { Button } from '../../components/Button'
 
-import { login } from './data'
+import { useAuth } from '../../hooks/useAuth'
 import { loginUserSchema, LoginUserFields } from './validator'
 
 export function Login() {
 	const navigate = useNavigate()
+	const auth = useAuth()
 
 	const { mutateAsync: loginFn, isPending } = useMutation({
-		mutationFn: login,
+		mutationFn: auth.signIn,
 	})
 
 	const { register, handleSubmit, formState } = useForm<LoginUserFields>({
@@ -24,8 +25,7 @@ export function Login() {
 
 	async function handleLoginUser({ email, password }: LoginUserFields) {
 		try {
-			const response = await loginFn({ email, password })
-			console.log(response)
+			await loginFn({ email, password })
 			navigate('/home')
 		} catch (error) {
 			console.log(error)
