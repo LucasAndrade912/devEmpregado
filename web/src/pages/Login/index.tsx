@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form'
+import { useMutation } from '@tanstack/react-query'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Link, useNavigate } from 'react-router-dom'
 import { Envelope, LockKey } from '@phosphor-icons/react'
@@ -6,19 +7,29 @@ import { Envelope, LockKey } from '@phosphor-icons/react'
 import { Input } from '../../components/Input'
 import { Button } from '../../components/Button'
 
+import { login } from './data'
 import { loginUserSchema, LoginUserFields } from './validator'
 
 export function Login() {
 	const navigate = useNavigate()
+
+	const { mutateAsync: loginFn, isPending } = useMutation({
+		mutationFn: login,
+	})
 
 	const { register, handleSubmit, formState } = useForm<LoginUserFields>({
 		mode: 'onChange',
 		resolver: zodResolver(loginUserSchema),
 	})
 
-	function handleLoginUser(data: LoginUserFields) {
-		console.log(data)
-		navigate('/home')
+	async function handleLoginUser({ email, password }: LoginUserFields) {
+		try {
+			const response = await loginFn({ email, password })
+			console.log(response)
+			navigate('/home')
+		} catch (error) {
+			console.log(error)
+		}
 	}
 
 	const { errors } = formState
@@ -85,7 +96,7 @@ export function Login() {
 					)}
 				</div>
 
-				<Button.Root type="submit" className="mt-10 w-full">
+				<Button.Root type="submit" className="mt-10 w-full" isLoading={isPending}>
 					<Button.Text>Acessar plataforma</Button.Text>
 				</Button.Root>
 			</form>
