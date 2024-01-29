@@ -58,7 +58,11 @@ export function Register() {
 							<User className={errors.name && 'text-red-500'} />
 						</Input.Icon>
 
-						<Input.Field id="name" placeholder="Digite seu nome completo" {...register('name')} />
+						<Input.Field
+							id="name"
+							placeholder="Digite seu nome completo"
+							{...register('name')}
+						/>
 					</Input.Root>
 
 					{errors.name && (
