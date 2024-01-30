@@ -1,7 +1,11 @@
 import { Router } from 'express'
 
+import { AuthMiddleware } from './middlewares/auth'
+
 import { LoginUserController } from './controllers/loginUser'
 import { RegisterUserController } from './controllers/registerUser'
+
+import { CreateJobController } from './controllers/createJob'
 
 export class Routes {
 	private router = Router()
@@ -18,9 +22,7 @@ export class Routes {
 			console.log('Get specified job')
 		})
 
-		this.router.post('/jobs', () => {
-			console.log('Create new job')
-		})
+		this.router.post('/jobs', AuthMiddleware.handle, CreateJobController.handle)
 
 		this.router.put('/jobs/:jobId', () => {
 			console.log('Update specified job')
