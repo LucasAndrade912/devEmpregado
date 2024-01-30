@@ -1,6 +1,6 @@
-import { Job } from '../../../entities/job'
+import { Job, JobProps } from '../../entities/job'
 
-export interface IJobRepository<T = Job> {
+export interface JobRepository<T = JobProps> {
 	create(userId: string, newJob: Job): Promise<void>
 	find(userId: string): Promise<T[]>
 	findById(jobId: string): Promise<T>

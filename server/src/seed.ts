@@ -1,12 +1,12 @@
-import { User } from './entities/user'
 import { Job } from './entities/job'
+import { User } from './entities/user'
 
+import { MongoDBJobRepository } from './repositories/job/mongodb'
 import { MongoDBUserRepository } from './repositories/user/mongodb'
-import { JobRepository } from './repositories/job/repository'
 
 export async function runSeed() {
+	const jobRepository = new MongoDBJobRepository()
 	const userRepository = new MongoDBUserRepository()
-	const jobRepository = new JobRepository()
 
 	const user1 = await User.build('Alice Johnson', 'alice@email.com', 'password123')
 	const user2 = await User.build('Bob Smith', 'bob@email.com', 'securePass')

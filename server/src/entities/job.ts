@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-type Props = {
+export type JobProps = {
 	company: string
 	role: string
 	modality?: string
@@ -13,13 +13,13 @@ type Props = {
 export class Job {
 	private company: string
 	private role: string
-	private modality: string | undefined | null
-	private contract: string | undefined | null
-	private salary: number | undefined | null
+	private modality: string | undefined
+	private contract: string | undefined
+	private salary: number | undefined
 	private status: 'Andamento' | 'Encerrada' | 'Efetivado'
 	private job_url: string
 
-	constructor(props: Props) {
+	constructor(props: JobProps) {
 		const jobSchema = z.object({
 			company: z.string(),
 			role: z.string(),
@@ -39,5 +39,33 @@ export class Job {
 		this.salary = job.salary
 		this.status = job.status
 		this.job_url = job.job_url
+	}
+
+	getCompany(): string {
+		return this.company
+	}
+
+	getRole(): string {
+		return this.role
+	}
+
+	getModality(): string | undefined {
+		return this.modality
+	}
+
+	getContract(): string | undefined {
+		return this.contract
+	}
+
+	getSalary(): number | undefined {
+		return this.salary
+	}
+
+	getStatus(): 'Andamento' | 'Encerrada' | 'Efetivado' {
+		return this.status
+	}
+
+	getJobUrl(): string {
+		return this.job_url
 	}
 }
