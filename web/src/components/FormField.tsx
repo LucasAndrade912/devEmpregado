@@ -4,6 +4,7 @@ import { Input } from './Input'
 
 type Props = {
 	label: string
+	required?: boolean
 	type?: string
 	placeholder?: string
 	className?: string
@@ -12,11 +13,23 @@ type Props = {
 }
 
 export const FormField = forwardRef<HTMLDivElement, Props>(
-	({ label, type = 'text', placeholder, className, icon, error, ...rest }, ref) => {
+	(
+		{
+			label,
+			required = true,
+			type = 'text',
+			placeholder,
+			className,
+			icon,
+			error,
+			...rest
+		},
+		ref
+	) => {
 		return (
 			<div className="flex flex-col gap-4 mb-7" ref={ref}>
 				<label htmlFor={label} className="text-lg">
-					{label} <span className="text-red-500">*</span>
+					{label} {required && <span className="text-red-500">*</span>}
 				</label>
 
 				<Input.Root className={error && 'border-red-500'}>
