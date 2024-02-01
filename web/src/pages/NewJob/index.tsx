@@ -7,10 +7,11 @@ import {
 	Link,
 } from '@phosphor-icons/react'
 import { useForm } from 'react-hook-form'
-import { Link as LinkURL } from 'react-router-dom'
-// import { useMutation } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useNavigate, Link as LinkURL } from 'react-router-dom'
 
+import { createJob } from './data'
 import { createJobSchema, CreateJobFields } from './validator'
 
 import { Select } from '../../components/Select'
@@ -18,13 +19,25 @@ import { Button } from '../../components/Button'
 import { FormField } from '../../components/FormField'
 
 export function NewJob() {
+	const navigate = useNavigate()
+
 	const { register, handleSubmit, formState } = useForm<CreateJobFields>({
 		resolver: zodResolver(createJobSchema),
 		mode: 'onChange',
 	})
 
+	const { mutateAsync: createJobFn, isPending } = useMutation({
+		mutationFn: createJob,
+	})
+
 	async function handleCreateJob(data: CreateJobFields) {
-		console.log(data)
+		try {
+			await createJobFn(data)
+			navigate('/home')
+		} catch (error) {
+			console.log(error)
+			alert('Erro ao cadastrar a candidatura!')
+		}
 	}
 
 	const { errors } = formState
@@ -120,7 +133,7 @@ export function NewJob() {
 					{...register('job_url')}
 				/>
 
-				<Button.Root type="submit" className="px-10">
+				<Button.Root type="submit" className="px-10" isLoading={isPending}>
 					<Button.Text className="font-medium">Cadastrar</Button.Text>
 				</Button.Root>
 			</form>
