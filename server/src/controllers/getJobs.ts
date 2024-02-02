@@ -10,7 +10,7 @@ export class GetJobsController {
 
 		try {
 			const userId = req.user as string
-			const jobs = await getJobsUseCase.execute({ userId, ...req.body })
+			const jobs = await getJobsUseCase.execute({ userId, ...req.query })
 
 			return res.status(200).json({ jobs })
 		} catch (error) {
