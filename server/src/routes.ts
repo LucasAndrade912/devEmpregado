@@ -5,6 +5,7 @@ import { AuthMiddleware } from './middlewares/auth'
 import { LoginUserController } from './controllers/loginUser'
 import { RegisterUserController } from './controllers/registerUser'
 
+import { GetJobController } from './controllers/getJob'
 import { GetJobsController } from './controllers/getJobs'
 import { CreateJobController } from './controllers/createJob'
 
@@ -16,11 +17,7 @@ export class Routes {
 		this.router.post('/login', LoginUserController.handle)
 
 		this.router.get('/jobs', AuthMiddleware.handle, GetJobsController.handle)
-
-		this.router.get('/jobs/:jobId', () => {
-			console.log('Get specified job')
-		})
-
+		this.router.get('/jobs/:jobId', AuthMiddleware.handle, GetJobController.handle)
 		this.router.post('/jobs', AuthMiddleware.handle, CreateJobController.handle)
 
 		this.router.put('/jobs/:jobId', () => {
