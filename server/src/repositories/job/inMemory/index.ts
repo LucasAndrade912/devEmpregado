@@ -42,6 +42,9 @@ export class InMemoryJobRepository implements JobRepository<JobContent> {
 	async findById(jobId: string): Promise<JobContent> {
 		const [jobs] = Object.values(this.jobs)
 		const [job] = jobs.filter(job => job.id === jobId)
+
+		if (!job) throw new Error('Job not found')
+
 		return job
 	}
 
