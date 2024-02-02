@@ -1,7 +1,7 @@
 import { JobModel } from './model'
-import { UserModel } from '../../user/mongodb/model'
 import { Job } from '../../../entities/job'
-import { JobRepository } from '../interface'
+import { UserModel } from '../../user/mongodb/model'
+import { JobRepository, Filters } from '../interface'
 
 type JobContent = Job & { user: string }
 
@@ -18,8 +18,9 @@ export class MongoDBJobRepository implements JobRepository<JobContent> {
 		)
 	}
 
-	async find(userId: string): Promise<JobContent[]> {
-		const jobs = await JobModel.find({ user: userId }) satisfies JobContent[]
+	async find(filters: Filters): Promise<JobContent[]> {
+		const filterList = { user: filters.userId, ...filters }
+		const jobs = await JobModel.find({ ...filterList }) satisfies JobContent[]
 		return jobs
 	}
 

@@ -1,5 +1,5 @@
 import { Job, JobProps } from '../../../entities/job'
-import { JobRepository } from '../interface'
+import { Filters, JobRepository } from '../interface'
 
 type JobContent = JobProps & { id: string, userId: string }
 type Jobs = Record<string, Array<JobContent>>
@@ -29,8 +29,14 @@ export class InMemoryJobRepository implements JobRepository<JobContent> {
 		this.jobs[userId] = [...this.jobs[userId], job]
 	}
 
-	async find(userId: string): Promise<JobContent[]> {
-		return this.jobs[userId]
+	async find(filters: Filters): Promise<JobContent[]> {
+		let jobs = this.jobs[filters.userId]
+		if (filters.company) jobs = jobs.filter(job => job.company === filters.company)
+		if (filters.role) jobs = jobs.filter(job => job.role === filters.role)
+		if (filters.modality) jobs = jobs.filter(job => job.modality === filters.modality)
+		if (filters.contract) jobs = jobs.filter(job => job.contract === filters.contract)
+
+		return jobs
 	}
 
 	async findById(jobId: string): Promise<JobContent> {
