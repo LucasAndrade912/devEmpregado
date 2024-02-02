@@ -1,6 +1,5 @@
 import { z } from 'zod'
 
-import { JobProps } from '../../entities/job'
 import { JobRepository } from '../../repositories/job/interface'
 
 type Input = {
@@ -11,10 +10,10 @@ type Input = {
 	contract?: string
 }
 
-export class GetJobs {
-	constructor(private jobRepository: JobRepository<JobProps>) {}
+export class GetJobs<T = unknown> {
+	constructor(private jobRepository: JobRepository<T>) {}
 
-	async execute(input: Input): Promise<JobProps[]> {
+	async execute(input: Input): Promise<T[]> {
 		const getJobsSchema = z.object({
 			userId: z.string().min(1),
 			company: z.string().min(2).optional(),

@@ -19,8 +19,13 @@ export class MongoDBJobRepository implements JobRepository<JobContent> {
 	}
 
 	async find(filters: Filters): Promise<JobContent[]> {
-		const filterList = { user: filters.userId, ...filters }
-		const jobs = await JobModel.find({ ...filterList }) satisfies JobContent[]
+		const { userId, ...rest } = filters
+		const filterList = { user: userId, ...rest }
+		const jobs = await JobModel.find(
+			{ ...filterList },
+			{ user: false, __v: false }
+		) satisfies JobContent[]
+
 		return jobs
 	}
 
