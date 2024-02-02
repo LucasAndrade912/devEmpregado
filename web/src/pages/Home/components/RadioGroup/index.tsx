@@ -1,21 +1,32 @@
+import { forwardRef } from 'react'
+import { UseFormRegisterReturn } from 'react-hook-form'
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
 
 import { Item } from './Item'
+import { useState } from 'react'
 
-type Props = {
+interface Props extends UseFormRegisterReturn {
 	values: string[]
-	selectedValue?: string
-	onSelect: (value: string) => void
 }
 
-export function RadioGroup({ values, selectedValue, onSelect }: Props) {
-	return (
-		<RadioGroupPrimitive.Root onValueChange={onSelect}>
-			<div className="flex gap-3">
-				{values.map((value) => (
-					<Item value={value} selectedValue={selectedValue} key={value} />
-				))}
-			</div>
-		</RadioGroupPrimitive.Root>
-	)
-}
+export const RadioGroup = forwardRef<HTMLDivElement, Props>(
+	({ values, name, onChange }, ref) => {
+		const [selectedValue, setSelectedValue] = useState('')
+
+		return (
+			<RadioGroupPrimitive.Root
+				name={name}
+				onValueChange={(value) => {
+					onChange({ target: { name, value } })
+					setSelectedValue(value)
+				}}
+				ref={ref}>
+				<div className="flex gap-3">
+					{values.map((value) => (
+						<Item value={value} key={value} selectedValue={selectedValue} />
+					))}
+				</div>
+			</RadioGroupPrimitive.Root>
+		)
+	}
+)
