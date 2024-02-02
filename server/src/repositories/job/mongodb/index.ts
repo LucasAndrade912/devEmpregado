@@ -29,8 +29,11 @@ export class MongoDBJobRepository implements JobRepository<JobContent> {
 		return jobs
 	}
 
-	async findById(jobId: string): Promise<JobContent> {
-		const job = await JobModel.findById(jobId) satisfies JobContent | null
+	async findById(userId: string, jobId: string): Promise<JobContent> {
+		const job = await JobModel.findOne(
+			{ $and: [{ user: userId }, { _id: jobId }] },
+			{ user: false, __v: false }
+		) satisfies JobContent | null
 
 		if (!job) throw new Error('Job not found')
 

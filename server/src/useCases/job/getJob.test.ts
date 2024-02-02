@@ -20,14 +20,19 @@ describe('GetJobs Use Case', () => {
 		await createJobUseCase.execute({ userId, company: 'Rocketseat', role: 'Desenvolvedor Mobile', job_url: 'http://github.com', status: 'Andamento', modality: 'Presencial' })
 	})
 
-	it('should be able get a specific job', async () => {
+	it('should be able to get a specific job', async () => {
 		const jobId = '5'
-		await expect(getJobUseCase.execute({ jobId })).resolves.not.toThrow()
-		await expect(getJobUseCase.execute({ jobId })).resolves.toMatchObject({ id: '5' })
+		await expect(getJobUseCase.execute({ userId, jobId })).resolves.not.toThrow()
+		await expect(getJobUseCase.execute({ userId, jobId })).resolves.toMatchObject({ id: '5' })
 	})
 
-	it('should not be able get a specific job if job ID not exists', async () => {
+	it('should not be able to get a specific job if job ID not exists', async () => {
 		const jobId = '100000'
-		await expect(getJobUseCase.execute({ jobId })).rejects.toThrow()
+		await expect(getJobUseCase.execute({ userId, jobId })).rejects.toThrow()
+	})
+
+	it('should not be able to get a specific job if it does not belong to the user', async () => {
+		const jobId = '1'
+		await expect(getJobUseCase.execute({ userId: '1000', jobId })).rejects.toThrow()
 	})
 })

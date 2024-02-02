@@ -11,7 +11,7 @@ export type Filters = {
 export interface JobRepository<T = unknown> {
 	create(userId: string, newJob: Job): Promise<void>
 	find(filters: Filters): Promise<T[]>
-	findById(jobId: string): Promise<T>
+	findById(userId: string, jobId: string): Promise<T>
 	update(jobId: string, job: Job): Promise<void>
 	delete(jobId: string): Promise<void>
 }

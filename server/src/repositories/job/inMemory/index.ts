@@ -39,8 +39,8 @@ export class InMemoryJobRepository implements JobRepository<JobContent> {
 		return jobs
 	}
 
-	async findById(jobId: string): Promise<JobContent> {
-		const [jobs] = Object.values(this.jobs)
+	async findById(userId: string, jobId: string): Promise<JobContent> {
+		const jobs = this.jobs[userId]
 		const [job] = jobs.filter(job => job.id === jobId)
 
 		if (!job) throw new Error('Job not found')
@@ -49,7 +49,9 @@ export class InMemoryJobRepository implements JobRepository<JobContent> {
 	}
 
 	async update(jobId: string, job: Job): Promise<void> {
-		const { userId } = await this.findById(jobId)
+		const [jobs] = Object.values(this.jobs)
+		const [filteredJob] = jobs.filter(job => job.id === jobId)
+		const { userId } = filteredJob
 
 		const updatedJob = {
 			id: jobId,
@@ -67,7 +69,10 @@ export class InMemoryJobRepository implements JobRepository<JobContent> {
 	}
 
 	async delete(jobId: string): Promise<void> {
-		const { userId } = await this.findById(jobId)
+		const [jobs] = Object.values(this.jobs)
+		const [filteredJob] = jobs.filter(job => job.id === jobId)
+		const { userId } = filteredJob
+
 		this.jobs[userId] = [...this.jobs[userId].filter(job => job.id !== jobId)]
 	}
 }
