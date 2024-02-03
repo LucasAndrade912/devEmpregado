@@ -11,7 +11,8 @@ import { Button } from '@components/Button'
 import { formatCurrency } from '@utils/formatCurrency'
 
 type Props = {
-	title: string
+	_id: string
+	role: string
 	status: string
 	company: string
 	contract: string
@@ -19,15 +20,23 @@ type Props = {
 	salary: number
 }
 
-export function JobCard({ title, status, company, contract, modality, salary }: Props) {
+export function JobCard({
+	_id,
+	role,
+	status,
+	company,
+	contract,
+	modality,
+	salary,
+}: Props) {
 	return (
 		<div className="p-5 2xl:p-6 border border-black-border rounded-lg flex flex-col">
 			<div className="flex justify-between items-center mb-7">
 				<h3 className="font-semibold text-lg 2xl:text-xl underline">
 					<Link
-						to="jobs/1"
+						to={`jobs/${_id}`}
 						className="block w-[280px] overflow-hidden overflow-ellipsis whitespace-nowrap">
-						{title}
+						{role}
 					</Link>
 				</h3>
 

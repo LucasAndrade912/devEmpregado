@@ -2,6 +2,7 @@ import { z } from 'zod'
 import { forwardRef } from 'react'
 import { useForm } from 'react-hook-form'
 import { Funnel } from '@phosphor-icons/react'
+import { useSearchParams } from 'react-router-dom'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import { Select } from '@components/Select'
@@ -12,20 +13,34 @@ import { RadioGroup } from './RadioGroup'
 const filterJobsSchema = z.object({
 	company: z.string().optional(),
 	role: z.string().optional(),
-	modality: z.string().optional(),
-	contract: z.string().optional(),
+	modality: z.string().optional().nullable(),
+	contract: z.string().optional().nullable(),
 })
 
 export type FilterJobsFields = z.infer<typeof filterJobsSchema>
 
 type Props = {
-	onSubmit: (data: FilterJobsFields) => Promise<void>
+	companies: string[]
+	roles: string[]
 }
 
-export const Filters = forwardRef<HTMLFormElement, Props>(({ onSubmit }, ref) => {
+export const Filters = forwardRef<HTMLFormElement, Props>(({ companies, roles }, ref) => {
+	const setSearchParams = useSearchParams()[1]
+
 	const { register, handleSubmit } = useForm<FilterJobsFields>({
 		resolver: zodResolver(filterJobsSchema),
 	})
+
+	function onSubmit({ company, role, modality, contract }: FilterJobsFields) {
+		setSearchParams((state) => {
+			company ? state.set('company', company) : state.delete('company')
+			role ? state.set('role', role) : state.delete('role')
+			modality ? state.set('modality', modality) : state.delete('modality')
+			contract ? state.set('contract', contract) : state.delete('contract')
+
+			return state
+		})
+	}
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} ref={ref}>
@@ -41,8 +56,8 @@ export const Filters = forwardRef<HTMLFormElement, Props>(({ onSubmit }, ref) =>
 						</Select.Trigger>
 
 						<Select.Items>
-							{['google', 'microsoft', 'apple', 'meta'].map((item) => (
-								<Select.Item value={item} key={item} />
+							{companies.map((company) => (
+								<Select.Item value={company} key={company} />
 							))}
 						</Select.Items>
 					</Select.Root>
@@ -57,11 +72,9 @@ export const Filters = forwardRef<HTMLFormElement, Props>(({ onSubmit }, ref) =>
 						</Select.Trigger>
 
 						<Select.Items>
-							{['Programador', 'Cibersegurança', 'Desenvolvedor Pleno', 'Estágio'].map(
-								(item) => (
-									<Select.Item value={item} key={item} />
-								)
-							)}
+							{roles.map((role) => (
+								<Select.Item value={role} key={role} />
+							))}
 						</Select.Items>
 					</Select.Root>
 				</div>

@@ -1,9 +1,9 @@
 import { forwardRef } from 'react'
+import { useState } from 'react'
 import { UseFormRegisterReturn } from 'react-hook-form'
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
 
 import { Item } from './Item'
-import { useState } from 'react'
 
 interface Props extends UseFormRegisterReturn {
 	values: string[]
