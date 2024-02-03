@@ -1,9 +1,9 @@
 import { JobModel } from './model'
-import { Job } from '../../../entities/job'
+import { Job, JobProps } from '../../../entities/job'
 import { UserModel } from '../../user/mongodb/model'
 import { JobRepository, Filters } from '../interface'
 
-type JobContent = Job & { user: string }
+type JobContent = JobProps & { user: string }
 
 export class MongoDBJobRepository implements JobRepository<JobContent> {
 	async create(userId: string, newJob: Job): Promise<void> {

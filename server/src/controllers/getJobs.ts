@@ -12,7 +12,14 @@ export class GetJobsController {
 			const userId = req.user as string
 			const jobs = await getJobsUseCase.execute({ userId, ...req.query })
 
-			return res.status(200).json({ jobs })
+			const allJobs = await getJobsUseCase.execute({ userId })
+			let companies = allJobs.reduce<string[]>((acc, job) => [...acc, job.company], [])
+			let roles = allJobs.reduce<string[]>((acc, job) => [...acc, job.role], [])
+
+			companies = Array.from(new Set(companies))
+			roles = Array.from(new Set(roles))
+
+			return res.status(200).json({ jobs, companies, roles })
 		} catch (error) {
 			res.status(400)
 
