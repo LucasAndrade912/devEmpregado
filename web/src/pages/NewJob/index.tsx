@@ -14,9 +14,10 @@ import { useNavigate, Link as LinkURL } from 'react-router-dom'
 import { createJob } from './data'
 import { createJobSchema, CreateJobFields } from './validator'
 
-import { Select } from '../../components/Select'
-import { Button } from '../../components/Button'
-import { FormField } from '../../components/FormField'
+import { Select } from '@components/Select'
+import { Button } from '@components/Button'
+import { FormField } from '@components/FormField'
+import { queryClient } from '@lib/queryClient'
 
 export function NewJob() {
 	const navigate = useNavigate()
@@ -28,6 +29,9 @@ export function NewJob() {
 
 	const { mutateAsync: createJobFn, isPending } = useMutation({
 		mutationFn: createJob,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ['jobs'] })
+		},
 	})
 
 	async function handleCreateJob(data: CreateJobFields) {
