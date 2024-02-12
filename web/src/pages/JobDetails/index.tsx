@@ -7,12 +7,21 @@ import {
 	PencilSimple,
 	Trash,
 } from '@phosphor-icons/react'
-import { Link as LinkURL } from 'react-router-dom'
-import { formatCurrency } from '../utils/formatCurrency'
-import { Button } from '../components/Button'
-import { Select } from '../components/Select'
+import { useQuery } from '@tanstack/react-query'
+import { Link as LinkURL, useParams } from 'react-router-dom'
+
+import { Button } from '@components/Button'
+import { formatCurrency } from '@utils/formatCurrency'
+import { getJob } from './data'
 
 export function JobDetails() {
+	const { jobId } = useParams()
+
+	const { data } = useQuery({
+		queryKey: ['jobDetails', jobId],
+		queryFn: () => getJob(jobId as string),
+	})
+
 	return (
 		<div className="mt-14">
 			<ul className="flex gap-2 items-center text-xs">
@@ -22,54 +31,42 @@ export function JobDetails() {
 					</LinkURL>
 				</li>
 				<li>&#707;</li>
-				<li>Programador Senior</li>
+				<li>{data?.job.role}</li>
 			</ul>
 
 			<div>
-				<div className="mb-10 mt-14 flex justify-between">
-					<h2 className="text-2xl font-title">Programador Senior</h2>
-
-					<Select.Root defaultValue="Andamento">
-						<Select.Trigger className="border-none w-[120px] gap-2 relative right-4">
-							<Select.Value />
-						</Select.Trigger>
-
-						<Select.Items className="w-[164px]">
-							{['Andamento', 'Encerrada', 'Efetivado'].map((item) => (
-								<Select.Item value={item} key={item} />
-							))}
-						</Select.Items>
-					</Select.Root>
-				</div>
+				<h2 className="mb-10 mt-14 text-2xl font-title">{data?.job.role}</h2>
 
 				<div className="grid grid-cols-[420px_1fr] gap-y-10 mb-14">
 					<div className="flex gap-3 items-center">
 						<Buildings size={24} />
 
-						<span className="text-xl">Empresa: Baires Dev</span>
+						<span className="text-xl">Empresa: {data?.job.company}</span>
 					</div>
 
 					<div className="flex gap-3 items-center">
 						<CurrencyCircleDollar size={24} />
 
-						<span className="text-xl">Salário: {formatCurrency(13000)}</span>
+						<span className="text-xl">
+							Salário: {formatCurrency(data?.job.salary as number)}
+						</span>
 					</div>
 
 					<div className="flex gap-3 items-center">
 						<MapPin size={24} />
-						<span className="text-xl">Modalidade: Presencial</span>
+						<span className="text-xl">Modalidade: {data?.job.modality}</span>
 					</div>
 
 					<div className="flex gap-3 items-center">
 						<AddressBook size={24} />
 
-						<span className="text-xl">Tipo de Contrato: CLT</span>
+						<span className="text-xl">Tipo de Contrato: {data?.job.contract}</span>
 					</div>
 				</div>
 
 				<div className="flex gap-8">
 					<Button.Root className="px-[14px] py-2" asChild>
-						<LinkURL to="#" target="_blank">
+						<LinkURL to={data?.job.job_url as string} target="_blank">
 							<Button.Icon>
 								<Link />
 							</Button.Icon>
