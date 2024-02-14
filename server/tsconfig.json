@@ -9,7 +9,16 @@
     "strict": true,
     "skipLibCheck": true,
     "noImplicitAny": true,
-		"typeRoots": ["src/@types", "./node_modules/@types"]
+		"typeRoots": ["src/@types", "./node_modules/@types"],
+		"baseUrl": "./src",
+		"paths": {
+			"@useCases/*": ["useCases/*"],
+			"@repositories/*": ["repositories/*"],
+			"@middlewares/*": ["middlewares/*"],
+			"@controllers/*": ["controllers/*"],
+			"@entities/*": ["entities/*"],
+			"@env": ["env.ts"],
+		}
   },
   "include": ["src"],
   "exclude": ["node_modules"]
