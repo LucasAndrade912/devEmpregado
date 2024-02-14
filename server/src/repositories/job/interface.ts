@@ -13,5 +13,5 @@ export interface JobRepository<T = unknown> {
 	find(filters: Filters): Promise<T[]>
 	findById(userId: string, jobId: string): Promise<T>
 	update(jobId: string, job: Job): Promise<void>
-	delete(jobId: string): Promise<void>
+	delete(userId: string, jobId: string): Promise<void>
 }

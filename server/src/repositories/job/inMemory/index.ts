@@ -1,4 +1,4 @@
-import { Job, JobProps } from '../../../entities/job'
+import { Job, JobProps } from '@entities/job'
 import { Filters, JobRepository } from '../interface'
 
 type JobContent = JobProps & { id: string, userId: string }
@@ -68,11 +68,13 @@ export class InMemoryJobRepository implements JobRepository<JobContent> {
 		this.jobs[userId] = [...this.jobs[userId].filter(job => job.id !== jobId), updatedJob]
 	}
 
-	async delete(jobId: string): Promise<void> {
-		const [jobs] = Object.values(this.jobs)
-		const [filteredJob] = jobs.filter(job => job.id === jobId)
-		const { userId } = filteredJob
+	async delete(userId: string, jobId: string): Promise<void> {
+		const jobs = this.jobs[userId]
+		if (!jobs) throw new Error('User not found')
 
-		this.jobs[userId] = [...this.jobs[userId].filter(job => job.id !== jobId)]
+		const deletedJob = jobs.find(job => job.id === jobId)
+		if (!deletedJob) throw new Error('Job not found')
+
+		this.jobs[userId] = jobs.filter(job => job.id !== jobId)
 	}
 }

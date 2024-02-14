@@ -1,6 +1,7 @@
+import { Job, JobProps } from '@entities/job'
+import { UserModel } from '@repositories/user/mongodb/model'
+
 import { JobModel } from './model'
-import { Job, JobProps } from '../../../entities/job'
-import { UserModel } from '../../user/mongodb/model'
 import { JobRepository, Filters } from '../interface'
 
 type JobContent = JobProps & { user: string }
@@ -47,7 +48,9 @@ export class MongoDBJobRepository implements JobRepository<JobContent> {
 		)
 	}
 
-	async delete(jobId: string): Promise<void> {
-		await JobModel.deleteOne({ _id: jobId })
+	async delete(userId: string, jobId: string): Promise<void> {
+		await JobModel.deleteOne({
+			$and: [{ user: userId }, { _id: jobId }]
+		})
 	}
 }
