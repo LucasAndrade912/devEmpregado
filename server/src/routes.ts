@@ -1,13 +1,14 @@
 import { Router } from 'express'
 
-import { AuthMiddleware } from './middlewares/auth'
+import { AuthMiddleware } from '@middlewares/auth'
 
-import { LoginUserController } from './controllers/loginUser'
-import { RegisterUserController } from './controllers/registerUser'
+import { LoginUserController } from '@controllers/loginUser'
+import { RegisterUserController } from '@controllers/registerUser'
 
-import { GetJobController } from './controllers/getJob'
-import { GetJobsController } from './controllers/getJobs'
-import { CreateJobController } from './controllers/createJob'
+import { GetJobController } from '@controllers/getJob'
+import { GetJobsController } from '@controllers/getJobs'
+import { CreateJobController } from '@controllers/createJob'
+import { DeleteJobController } from '@controllers/deleteJob'
 
 export class Routes {
 	private router = Router()
@@ -24,9 +25,7 @@ export class Routes {
 			console.log('Update specified job')
 		})
 
-		this.router.delete('/jobs/:jobId', () => {
-			console.log('Delete specified job')
-		})
+		this.router.delete('/jobs/:jobId', AuthMiddleware.handle, DeleteJobController.handle)
 
 		return this.router
 	}
