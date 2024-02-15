@@ -13,7 +13,7 @@ export class DeleteJobController {
 			const { jobId } = req.params
 			await deleteJobUseCase.execute({ userId, jobId })
 
-			return res.status(204)
+			return res.status(204).send()
 		} catch (error) {
 			res.status(400)
 

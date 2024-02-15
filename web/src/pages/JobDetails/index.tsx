@@ -7,20 +7,40 @@ import {
 	PencilSimple,
 	Trash,
 } from '@phosphor-icons/react'
-import { useQuery } from '@tanstack/react-query'
-import { Link as LinkURL, useParams } from 'react-router-dom'
+import { useQuery, useMutation } from '@tanstack/react-query'
+import { Link as LinkURL, useParams, useNavigate } from 'react-router-dom'
 
 import { Button } from '@components/Button'
+import { queryClient } from '@lib/queryClient'
 import { formatCurrency } from '@utils/formatCurrency'
-import { getJob } from './data'
+import { getJob, deleteJob } from './data'
 
 export function JobDetails() {
 	const { jobId } = useParams()
+	const navigate = useNavigate()
 
 	const { data } = useQuery({
 		queryKey: ['jobDetails', jobId],
 		queryFn: () => getJob(jobId as string),
 	})
+
+	const { mutateAsync: deleteJobFn, isPending } = useMutation({
+		mutationFn: deleteJob,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ['jobs'] })
+			queryClient.invalidateQueries({ queryKey: ['jobDetails', jobId] })
+		},
+	})
+
+	async function handleDeleteJob() {
+		try {
+			await deleteJobFn(jobId as string)
+			navigate('/home')
+			alert('Job deletado com sucesso')
+		} catch (error) {
+			alert('Erro ao deletar Job')
+		}
+	}
 
 	return (
 		<div className="mt-14">
@@ -89,14 +109,13 @@ export function JobDetails() {
 
 					<Button.Root
 						className="px-[14px] py-2 bg-[#CD0000] transition-colors hover:bg-[#F01212]"
-						asChild>
-						<LinkURL to="#" target="_blank">
-							<Button.Icon>
-								<Trash />
-							</Button.Icon>
+						onClick={handleDeleteJob}
+						disabled={isPending}>
+						<Button.Icon>
+							<Trash />
+						</Button.Icon>
 
-							<Button.Text>Deletar vaga</Button.Text>
-						</LinkURL>
+						<Button.Text>Deletar vaga</Button.Text>
 					</Button.Root>
 				</div>
 			</div>
