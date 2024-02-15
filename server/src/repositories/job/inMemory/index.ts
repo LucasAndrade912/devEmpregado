@@ -1,5 +1,5 @@
 import { Job, JobProps } from '@entities/job'
-import { Filters, JobRepository } from '../interface'
+import { Filters, JobRepository, UpdateOptions } from '../interface'
 
 type JobContent = JobProps & { id: string, userId: string }
 type Jobs = Record<string, Array<JobContent>>
@@ -48,24 +48,27 @@ export class InMemoryJobRepository implements JobRepository<JobContent> {
 		return job
 	}
 
-	async update(jobId: string, job: Job): Promise<void> {
-		const [jobs] = Object.values(this.jobs)
-		const [filteredJob] = jobs.filter(job => job.id === jobId)
-		const { userId } = filteredJob
+	async update(userId: string, jobId: string, options: UpdateOptions): Promise<void> {
+		let jobs = this.jobs[userId]
+		if (!jobs) throw new Error('User not found')
 
-		const updatedJob = {
-			id: jobId,
-			userId,
-			company: job.getCompany(),
-			role: job.getRole(),
-			modality: job.getModality(),
-			contract: job.getContract(),
-			salary: job.getSalary(),
-			status: job.getStatus(),
-			job_url: job.getJobUrl()
+		let updatedJob = jobs.find(job => job.id === jobId)
+		if (!updatedJob) throw new Error('Job not found')
+
+		updatedJob = {
+			...updatedJob,
+			company: options.company ?? updatedJob.company,
+			job_url: options.job_url ?? updatedJob.job_url,
+			role: options.role ?? updatedJob.role,
+			status: options.status ?? updatedJob.status,
+			contract: options.contract ?? updatedJob.contract,
+			modality: options.modality ?? updatedJob.modality,
+			salary: options.salary ?? updatedJob.salary
 		}
 
-		this.jobs[userId] = [...this.jobs[userId].filter(job => job.id !== jobId), updatedJob]
+		jobs = jobs.filter(job => job.id !== jobId)
+		jobs.push(updatedJob)
+		this.jobs[userId] = jobs
 	}
 
 	async delete(userId: string, jobId: string): Promise<void> {

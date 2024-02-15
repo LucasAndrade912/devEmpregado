@@ -2,7 +2,7 @@ import { Job, JobProps } from '@entities/job'
 import { UserModel } from '@repositories/user/mongodb/model'
 
 import { JobModel } from './model'
-import { JobRepository, Filters } from '../interface'
+import { JobRepository, Filters, UpdateOptions } from '../interface'
 
 type JobContent = JobProps & { user: string }
 
@@ -41,10 +41,10 @@ export class MongoDBJobRepository implements JobRepository<JobContent> {
 		return job
 	}
 
-	async update(jobId: string, job: Job): Promise<void> {
+	async update(userId: string, jobId: string, options: UpdateOptions): Promise<void> {
 		await JobModel.updateOne(
-			{ _id: jobId },
-			{ ...job }
+			{ $and: [{ _id: jobId }, { user: userId }] },
+			{ ...options }
 		)
 	}
 
