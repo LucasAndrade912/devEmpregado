@@ -50,33 +50,23 @@ export const Filters = forwardRef<HTMLFormElement, Props>(({ companies, roles },
 				<div className="input-field flex flex-col gap-[14px]">
 					<p>Empresa</p>
 
-					<Select.Root {...register('company')}>
-						<Select.Trigger className="w-full">
-							<Select.Value placeholder="Selecione a empresa" />
-						</Select.Trigger>
-
-						<Select.Items>
-							{companies.map((company) => (
-								<Select.Item value={company} key={company} />
-							))}
-						</Select.Items>
-					</Select.Root>
+					<Select
+						items={companies}
+						classNameValue="w-full"
+						placeholder="Selecione a empresa"
+						{...register('company')}
+					/>
 				</div>
 
 				<div className="input-field flex flex-col gap-[14px]">
 					<p>Cargo</p>
 
-					<Select.Root {...register('role')}>
-						<Select.Trigger className="w-full">
-							<Select.Value placeholder="Selecione o cargo" />
-						</Select.Trigger>
-
-						<Select.Items>
-							{roles.map((role) => (
-								<Select.Item value={role} key={role} />
-							))}
-						</Select.Items>
-					</Select.Root>
+					<Select
+						items={roles}
+						classNameValue="w-full"
+						placeholder="Selecione o cargo"
+						{...register('role')}
+					/>
 				</div>
 
 				<div className="input-field flex flex-col gap-[14px]">

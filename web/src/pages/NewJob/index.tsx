@@ -83,39 +83,27 @@ export function NewJob() {
 					<div className="flex flex-col gap-4">
 						<label className="text-lg">Modalidade</label>
 
-						<Select.Root {...register('modality')}>
-							<Select.Trigger className="w-full">
-								<Select.Icon>
-									<MapPin />
-								</Select.Icon>
-								<Select.Value placeholder="Modalidade de trabalho" />
-							</Select.Trigger>
-
-							<Select.Items className="relative right-8 w-[320px]">
-								{['Remoto', 'Presencial', 'Híbrido'].map((item) => (
-									<Select.Item value={item} key={item} />
-								))}
-							</Select.Items>
-						</Select.Root>
+						<Select
+							items={['Remoto', 'Presencial', 'Híbrido']}
+							icon={<MapPin />}
+							classNameValue="w-full"
+							classNameItems="relative right-8 w-[320px]"
+							placeholder="Modalidade de trabalho"
+							{...register('modality')}
+						/>
 					</div>
 
 					<div className="flex flex-col gap-4">
 						<label className="text-lg">Tipo de Contrato</label>
 
-						<Select.Root {...register('contract')}>
-							<Select.Trigger className="w-full">
-								<Select.Icon>
-									<AddressBook />
-								</Select.Icon>
-								<Select.Value placeholder="Selecione o tipo do contrato" />
-							</Select.Trigger>
-
-							<Select.Items className="relative right-8 w-[320px]">
-								{['CLT', 'PJ'].map((item) => (
-									<Select.Item value={item} key={item} />
-								))}
-							</Select.Items>
-						</Select.Root>
+						<Select
+							items={['CLT', 'PJ']}
+							icon={<AddressBook />}
+							classNameValue="w-full"
+							classNameItems="relative right-8 w-[320px]"
+							placeholder="Selecione o tipo do contrato"
+							{...register('contract')}
+						/>
 					</div>
 
 					<FormField
