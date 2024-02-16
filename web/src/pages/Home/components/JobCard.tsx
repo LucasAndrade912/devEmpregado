@@ -18,6 +18,7 @@ type Props = {
 	contract: string
 	modality: string
 	salary: number
+	job_url: string
 }
 
 export function JobCard({
@@ -28,6 +29,7 @@ export function JobCard({
 	contract,
 	modality,
 	salary,
+	job_url,
 }: Props) {
 	return (
 		<div className="p-5 2xl:p-6 border border-black-border rounded-lg flex flex-col">
@@ -66,12 +68,12 @@ export function JobCard({
 			</div>
 
 			<Button.Root asChild className="self-start gap-2 2xl:gap-3 px-[14px] py-2">
-				<a href="#">
+				<Link to={job_url}>
 					<Button.Icon>
 						<LinkURL className="text-white text-sm 2xl:text-base" />
 					</Button.Icon>
 					<Button.Text className="text-sm 2xl:text-base">Acessar vaga</Button.Text>
-				</a>
+				</Link>
 			</Button.Root>
 		</div>
 	)
