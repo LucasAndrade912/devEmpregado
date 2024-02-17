@@ -1,5 +1,5 @@
 import axios from 'axios'
 
 export const api = axios.create({
-	baseURL: 'https://devempregado.onrender.com/'
+	baseURL: import.meta.env.DEV ? 'http://localhost:3000/' : 'https://devempregado.onrender.com/'
 })
