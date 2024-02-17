@@ -6,6 +6,10 @@
 
 > Projeto para agrupar todas as vagas de emprego que o usuário se candidatou.
 
+## 📸 Layout
+
+<img src="layout.png" alt="Web Layout" />
+
 ## 🛠️ Techs
 
 <div>
