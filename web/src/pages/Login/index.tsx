@@ -1,8 +1,13 @@
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 
 import { Form } from './components/Form'
+import { useAuth } from '@hooks/useAuth'
 
 export function Login() {
+	const auth = useAuth()
+
+	if (auth.token) return <Navigate to="/home" />
+
 	return (
 		<div className="w-full h-screen flex items-center flex-col">
 			<h1 className="font-title mt-20 2xl:mt-32 text-[4rem]">
