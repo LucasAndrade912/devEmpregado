@@ -1,9 +1,8 @@
 import { z } from 'zod'
 import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
 
-import { env } from '../../env'
-import { UserRepository } from '../../repositories/user/interface'
+import { GenerateTokens } from '@utils/generateTokens'
+import { UserRepository } from '@repositories/user/interface'
 
 type Input = {
 	email: string
@@ -13,7 +12,7 @@ type Input = {
 export class LoginUser {
 	constructor(private userRepository: UserRepository) {}
 
-	async execute({ email, password }: Input): Promise<string> {
+	async execute({ email, password }: Input) {
 		const userSchema = z.object({
 			email: z.string().email(),
 			password: z.string().min(8).max(64)
@@ -23,18 +22,18 @@ export class LoginUser {
 
 		const user = await this.userRepository.findByEmail(email)
 
-		if (!user) throw new Error('User not exists')
+		if (!user) throw new Error('Email or Password was incorrect')
 
 		const encryptedPassword = user.password
 		const result = await bcrypt.compare(password, encryptedPassword)
 
-		if (!result) throw new Error('Email or password was incorrect')
+		if (!result) throw new Error('Email or Password was incorrect')
 
-		const token = jwt.sign({ name: user.name }, env.JWT_SECRET, {
-			expiresIn: '7 days',
-			subject: user.id
-		})
+		const { accessToken, refreshToken } = GenerateTokens.generate(
+			{ name: user.name },
+			user.id
+		)
 
-		return token
+		return { accessToken, refreshToken }
 	}
 }

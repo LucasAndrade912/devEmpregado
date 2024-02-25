@@ -12,6 +12,7 @@
 			"@controllers/*": ["controllers/*"],
 			"@entities/*": ["entities/*"],
 			"@env": ["env.ts"],
+			"@utils/*": ["utils/*"],
 		}
   },
 	"include": ["src"],

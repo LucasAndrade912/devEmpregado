@@ -93,7 +93,9 @@ const config: Config = {
 	moduleNameMapper: {
 		'@repositories/(.*)': '<rootDir>/src/repositories/$1',
 		'@useCases/(.*)': '<rootDir>/src/useCases/$1',
-		'@entities/(.*)': '<rootDir>/src/entities/$1'
+		'@entities/(.*)': '<rootDir>/src/entities/$1',
+		'@utils/(.*)': '<rootDir>/src/utils/$1',
+		'@env': '<rootDir>/src/env'
 	},
 
 	// An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader

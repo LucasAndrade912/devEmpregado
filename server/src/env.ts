@@ -2,7 +2,8 @@ import { z } from 'zod'
 
 const envSchema = z.object({
 	MONGODB_DATABASE_URL: z.string().url(),
-	JWT_SECRET: z.string(),
+	JWT_ACCESS_TOKEN_SECRET: z.string(),
+	JWT_REFRESH_TOKEN_SECRET: z.string(),
 	NODE_ENV: z.string(),
 	PORT: z.string().optional()
 })

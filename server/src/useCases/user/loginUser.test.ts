@@ -17,8 +17,9 @@ describe('LoginUser Use Case', () => {
 
 	it('should be able to login successfully', async () => {
 		const user = { email: 'gabi.gol@gmail.com', password: 'gabigol123' }
-		const token = await loginUserUseCase.execute(user)
-		expect(token).not.toHaveLength(0)
+		const { accessToken, refreshToken } = await loginUserUseCase.execute(user)
+		expect(accessToken).not.toHaveLength(0)
+		expect(refreshToken).not.toHaveLength(0)
 	})
 
 	it('should not be able to login successfully when user not exists', async () => {

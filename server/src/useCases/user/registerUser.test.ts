@@ -7,8 +7,9 @@ const registerUserUseCase = new RegisterUser(userRepository)
 describe('RegisterUser Use Case', () => {
 	it('should be able to register a user', async () => {
 		const user = { name: 'John Doe', email: 'john.doe@gmail.com', password: 'password1234' }
-		const token = await registerUserUseCase.execute(user)
-		expect(token).not.toHaveLength(0)
+		const { accessToken, refreshToken } = await registerUserUseCase.execute(user)
+		expect(accessToken).not.toHaveLength(0)
+		expect(refreshToken).not.toHaveLength(0)
 	})
 
 	it('should not be able to register user that already exists', async () => {

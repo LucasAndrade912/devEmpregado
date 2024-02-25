@@ -1,9 +1,8 @@
 import { z } from 'zod'
-import jwt from 'jsonwebtoken'
 
-import { env } from '../../env'
-import { User } from '../../entities/user'
-import { UserRepository } from '../../repositories/user/interface'
+import { User } from '@entities/user'
+import { GenerateTokens } from '@utils/generateTokens'
+import { UserRepository } from '@repositories/user/interface'
 
 type Input = {
 	name: string
@@ -14,7 +13,7 @@ type Input = {
 export class RegisterUser {
 	constructor(private userRepository: UserRepository) {}
 
-	async execute({ name, email, password }: Input): Promise<string> {
+	async execute({ name, email, password }: Input) {
 		const userSchema = z.object({
 			name: z.string().min(2),
 			email: z.string().email(),
@@ -30,11 +29,11 @@ export class RegisterUser {
 		const newUser = await User.build(name, email, password)
 		const id = await this.userRepository.create(newUser)
 
-		const token = jwt.sign({ name }, env.JWT_SECRET, {
-			expiresIn: '7 days',
-			subject: id
-		})
+		const { accessToken, refreshToken } = GenerateTokens.generate(
+			{ name },
+			id
+		)
 
-		return token
+		return { accessToken, refreshToken }
 	}
 }
