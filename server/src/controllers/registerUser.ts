@@ -9,9 +9,13 @@ export class RegisterUserController {
 		const registerUserUseCase = new RegisterUser(userRepository)
 
 		try {
-			const token = await registerUserUseCase.execute(req.body)
+			const { accessToken, refreshToken } = await registerUserUseCase.execute(req.body)
 
-			return res.status(201).json({ message: 'User created successfully', token })
+			return res.status(201).json({
+				message: 'User created successfully',
+				accessToken,
+				refreshToken
+			})
 		} catch (error) {
 			res.status(400)
 
