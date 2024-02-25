@@ -20,9 +20,6 @@ type Response = {
 }
 
 export async function getJobs(filters: FilterJobsFields): Promise<Response> {
-	const token = localStorage.getItem('token') || ''
-	const headers = { Authorization: `Bearer ${token}` }
-
 	if (filters.company || filters.contract || filters.modality || filters.role) {
 		const { company, role, modality, contract } = filters
 		const options = Object.assign({},
@@ -33,10 +30,10 @@ export async function getJobs(filters: FilterJobsFields): Promise<Response> {
 		)
 
 		const queryString = '?' + new URLSearchParams(options).toString()
-		const { data } = await api.get<Response>(`/jobs${queryString}`, { headers })
+		const { data } = await api.get<Response>(`/jobs${queryString}`)
 		return data
 	}
 
-	const { data } = await api.get<Response>('/jobs', { headers })
+	const { data } = await api.get<Response>('/jobs')
 	return data
 }

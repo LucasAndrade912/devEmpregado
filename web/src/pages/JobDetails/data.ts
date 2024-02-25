@@ -14,19 +14,11 @@ type Response = {
 }
 
 export async function deleteJob(jobId: string) {
-	const token = localStorage.getItem('token') || ''
-
-	await api.delete(`/jobs/${jobId}`, {
-		headers: { Authorization: `Bearer ${token}` }
-	})
+	await api.delete(`/jobs/${jobId}`)
 }
 
 export async function getJob(jobId: string) {
-	const token = localStorage.getItem('token') || ''
-
-	const { data } = await api.get<Response>(`/jobs/${jobId}`, {
-		headers: { Authorization: `Bearer ${token}` }
-	})
+	const { data } = await api.get<Response>(`/jobs/${jobId}`)
 
 	return data
 }

@@ -10,9 +10,5 @@ type Job = {
 }
 
 export async function createJob(job: Job) {
-	const token = localStorage.getItem('token') || ''
-
-	await api.post('/jobs', { status: 'Andamento', ...job }, {
-		headers: { Authorization: `Bearer ${token}` }
-	})
+	await api.post('/jobs', { status: 'Andamento', ...job })
 }

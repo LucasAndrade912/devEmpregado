@@ -11,9 +11,6 @@ type Job = {
 }
 
 export async function updateJob({ jobId, ...job }: Job) {
-	const token = localStorage.getItem('token') || ''
 
-	await api.patch(`/jobs/${jobId}`, { status: 'Andamento', ...job }, {
-		headers: { Authorization: `Bearer ${token}` }
-	})
+	await api.patch(`/jobs/${jobId}`, { status: 'Andamento', ...job })
 }

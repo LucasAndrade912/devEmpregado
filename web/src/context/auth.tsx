@@ -1,14 +1,15 @@
 import { createContext, useState } from 'react'
 
-import { api } from '../lib/api'
+import { api } from '@lib/api'
 
 type Props = {
 	children: React.ReactNode
 }
 
 type Response = {
-	token: string
 	message: string
+	accessToken: string
+	refreshToken: string
 }
 
 type AuthData = {
@@ -20,7 +21,7 @@ type AuthData = {
 export const AuthContext = createContext<AuthData>({} as AuthData)
 
 export function AuthProvider({ children }: Props) {
-	const [token, setToken] = useState(localStorage.getItem('token') || '')
+	const [token, setToken] = useState(localStorage.getItem('access_token') || '')
 
 	async function signUp(user: {
 		name: string
@@ -28,14 +29,22 @@ export function AuthProvider({ children }: Props) {
 		password: string
 	}): Promise<void> {
 		const { data } = await api.post<Response>('/register', user)
-		localStorage.setItem('token', data.token)
-		setToken(data.token)
+		const { accessToken, refreshToken } = data
+
+		localStorage.setItem('access_token', accessToken)
+		localStorage.setItem('refresh_token', refreshToken)
+
+		setToken(accessToken)
 	}
 
 	async function signIn(user: { email: string; password: string }): Promise<void> {
 		const { data } = await api.post<Response>('/login', user)
-		localStorage.setItem('token', data.token)
-		setToken(data.token)
+		const { accessToken, refreshToken } = data
+
+		localStorage.setItem('access_token', accessToken)
+		localStorage.setItem('refresh_token', refreshToken)
+
+		setToken(accessToken)
 	}
 
 	return (
